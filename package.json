@@ -35,7 +35,10 @@
     "url": "https://github.com/alykoshin/wrtc-mediastream/issues"
   },
   "homepage": "https://github.com/alykoshin/wrtc-mediastream",
-  "dependencies": {},
+  "dependencies": {
+    "mini-debug": "0.0.3",
+    "webapi-mediastream": "0.0.3"
+  },
   "devDependencies": {
     "chai": "^3.4.1",
     "coveralls": "^2.11.4",
