@@ -12,6 +12,10 @@
 
 MediaStream API wrapper for WRTC 
 
+This package is part of WRTC project.
+
+Not yet ready for public usage.
+
 
 If you have different needs regarding the functionality, please add a [feature request](https://github.com/alykoshin/wrtc-mediastream/issues).
 
@@ -23,6 +27,10 @@ npm install --save wrtc-mediastream
 ```
 
 ## Usage
+
+This package is part of WRTC project.
+
+Not yet ready for public usage.
 
 
 ## Credits
