@@ -1,6 +1,6 @@
 {
   "name": "wrtc-mediastream",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "MediaStream API wrapper for WRTC ",
   "main": "app/index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "coverall": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "keywords": [
-      "webapi,webrtc,mediastream,wrtc"
+    "webapi,webrtc,mediastream,wrtc"
   ],
   "author": "Alexander <alykoshin@gmail.com>",
   "license": "MIT",
@@ -35,8 +35,7 @@
     "url": "https://github.com/alykoshin/wrtc-mediastream/issues"
   },
   "homepage": "https://github.com/alykoshin/wrtc-mediastream",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^3.4.1",
     "coveralls": "^2.11.4",
