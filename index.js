@@ -1,7 +1,8 @@
 'use strict';
 
 if ( typeof module !== 'undefined' && typeof require !== 'undefined') {
-  var debug   = require('mini-debug');
+  var debug = require('mini-debug');
+  var Attachable = require('attachable');
   var WebapiMediaStream = require('webapi-mediastream');
 }
 
