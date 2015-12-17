@@ -10,19 +10,37 @@ if ( typeof module !== 'undefined' && typeof require !== 'undefined') {
  * @constructor
  * @extends WebapiMediaStream
  * @param {MediaStream} stream
+ * @param {"local"|"remote"} kind
  * @returns {WrtcMediaStream}
  */
-var WrtcMediaStream = function(stream) {
-  var self = WebapiMediaStream(stream);
+var WrtcMediaStream = function(stream, kind) {
+  var self = new WebapiMediaStream(stream);
+  Attachable(self);
   //var self = this;
 
   self.muted        = false;
   self.videoEnabled = true;
   self.audioEnabled = true;
 
+  function setObjectEventDebug(object, prop, debugMethod) {
+    object[prop] = function(event) { debug[debugMethod]('WrtcMediaStream: mediaTrack.'+prop+': kind: '+object.kind+', event:', event); };
+  }
+  function setTracksDebug(tracks) {
+    var i, len;
+    for (len=tracks.length, i=0; i<len; ++i) {
+      setObjectEventDebug(tracks[i], 'onended',  'warn');
+      setObjectEventDebug(tracks[i], 'onmute',   'log');
+      setObjectEventDebug(tracks[i], 'onoverconstrained', 'warn');
+      setObjectEventDebug(tracks[i], 'onunmute', 'log');
+    }
+  }
+  // Assign event handlers to stream tracks
+  setTracksDebug(stream.getTracks());
+
   self.stop = function() {
     debug.log('WebapiMediaStream.stop()');
     self.emit('stop');
+    self.detachAll();
     stream.stop();
   };
 
@@ -70,6 +88,43 @@ var WrtcMediaStream = function(stream) {
   self.setAudioEnabled(self.audioEnabled);
 
   self.setVideoEnabled(self.videoEnabled);
+
+  /**
+   * Print information on devices used for the stream
+   */
+  self._printInfo = function() {
+    var i, msg, prefix = 'WrtcMediaStream._printInfo(): ';
+    var audioTracks = self.stream.getAudioTracks();
+    if (audioTracks.length > 0) {
+      if (kind==='local' && audioTracks.length > 1) {
+        debug.warn(prefix+'Expected 1 audio track for local stream.');
+      }
+      for (i = 0; i<audioTracks.length; i++) {
+        debug.info(prefix+'Using Audio device (audioTracks[i].label): \'' + audioTracks[ i ].label + '\'');
+
+        msg = prefix+'audioTracks[i].readyState: \'' + audioTracks[ i ].readyState + '\'';
+        (audioTracks[ i ].readyState === 'ended') ? debug.warn(msg) : debug.log(msg);
+      }
+    } else {
+      debug.warn(prefix+'stream does not contains audioTracks');
+    }
+
+
+    var videoTracks = self.stream.getVideoTracks();
+    if (videoTracks.length > 0) {
+      if (kind==='local' && videoTracks.length > 1) {
+        debug.warn(prefix+'Expected 1 video track for local stream.');
+      }
+      for (i = 0; i<audioTracks.length; i++) {
+        debug.info(prefix+'Using Video device (videoTracks[i].label): \'' + videoTracks[ i ].label + '\'');
+
+        msg = prefix+'videoTracks[i].readyState: \'' + videoTracks[ i ].readyState + '\'';
+        (videoTracks[ i ].readyState === 'ended') ? debug.warn(msg) : debug.log(msg);
+      }
+    } else {
+      debug.warn(prefix+'stream does not contains videoTracks');
+    }
+  };
 
   return self;
 };
