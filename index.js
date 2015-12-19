@@ -11,7 +11,7 @@ if ( typeof module !== 'undefined' && typeof require !== 'undefined') {
  * @constructor
  * @extends WebapiMediaStream
  * @param {MediaStream} stream
- * @param {"local"|"remote"} kind
+ * @param {"local"||"remote"} kind
  * @returns {WrtcMediaStream}
  */
 var WrtcMediaStream = function(stream, kind) {
@@ -19,20 +19,23 @@ var WrtcMediaStream = function(stream, kind) {
   Attachable(self);
   //var self = this;
 
-  self.muted        = false;
+  //self.muted        = false;
   self.videoEnabled = true;
   self.audioEnabled = true;
 
-  function setObjectEventDebug(object, prop, debugMethod) {
-    object[prop] = function(event) { debug[debugMethod]('WrtcMediaStream: mediaTrack.'+prop+': kind: '+object.kind+', event:', event); };
+  function setHandler(object, trackEventName, streamEventName, debugMethod) {
+    object[trackEventName] = function(event) {
+      debug[debugMethod]('WrtcMediaStream: mediaTrack.'+trackEventName+': kind: '+object.kind+', event:', event);
+      self.emit(streamEventName, event);
+    };
   }
   function setTracksDebug(tracks) {
     var i, len;
     for (len=tracks.length, i=0; i<len; ++i) {
-      setObjectEventDebug(tracks[i], 'onended',  'warn');
-      setObjectEventDebug(tracks[i], 'onmute',   'log');
-      setObjectEventDebug(tracks[i], 'onoverconstrained', 'warn');
-      setObjectEventDebug(tracks[i], 'onunmute', 'log');
+      setHandler(tracks[i], 'onended',  'trackended',  'warn');
+      setHandler(tracks[i], 'onmute',   'trackmute',   'log');
+      setHandler(tracks[i], 'onoverconstrained', 'trackoverconstrained', 'warn');
+      setHandler(tracks[i], 'onunmute', 'trackunmute', 'log');
     }
   }
   // Assign event handlers to stream tracks
