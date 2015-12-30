@@ -37,7 +37,7 @@ Not yet ready for public usage.
 [Alexander](https://github.com/alykoshin/)
 
 
-# Links to package pages:
+## Links to package pages:
 
 [github.com](https://github.com/alykoshin/wrtc-mediastream) &nbsp; [npmjs.com](https://www.npmjs.com/package/wrtc-mediastream) &nbsp; [travis-ci.org](https://travis-ci.org/alykoshin/wrtc-mediastream) &nbsp; [coveralls.io](https://coveralls.io/github/alykoshin/wrtc-mediastream) &nbsp; [inch-ci.org](https://inch-ci.org/github/alykoshin/wrtc-mediastream)
 
