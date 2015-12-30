@@ -16,7 +16,7 @@ if ( typeof module !== 'undefined' && typeof require !== 'undefined') {
  */
 var WrtcMediaStream = function(stream, kind) {
   var self = new WebapiMediaStream(stream);
-  //Attachable(self);
+  Attachable(self);
   //var self = this;
 
   //self.muted        = false;
