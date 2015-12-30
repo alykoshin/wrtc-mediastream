@@ -1,6 +1,6 @@
 {
   "name": "wrtc-mediastream",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MediaStream API wrapper for WRTC ",
   "main": "app/index.js",
   "scripts": {
